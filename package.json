@@ -1,0 +1,22 @@
+{
+  "name": "test-webpack-favicon",
+  "description": "Test of webpack favicon",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run clean && rspack",
+    "build:relative": "npm run clean && rspack --env useRelativePath=true",
+    "clean": "rimraf dist",
+    "dev": "rspack serve"
+  },
+  "dependencies": {
+    "@rspack/cli": "^0.1.8",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.44",
+    "@types/react-dom": "^17.0.15",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.0.2"
+  }
+}
