@@ -1,10 +1,11 @@
 const path = require("node:path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 /**
  * @param {Record<string, any>} env
- * @returns {import('@rspack/cli').Configuration}
+ * @returns {import('webpack').Configuration}
  */
-function makeRsPackConfig(env) {
+function makeWebpackConfig(env) {
   const { useRelativePath = "false" } = env;
 
   const cwd = process.cwd();
@@ -13,7 +14,7 @@ function makeRsPackConfig(env) {
 
   const entry = path.resolve(cwd, "src", "index.tsx");
 
-  const basePath = path.join("dist", "rs");
+  const basePath = path.join("dist", "webpack");
 
   const distFolder =
     useRelativePath === "true"
@@ -31,22 +32,33 @@ function makeRsPackConfig(env) {
       ? path.join("static", "favicon.ico")
       : path.resolve(cwd, "static", "favicon.ico");
 
-  const builtins = {
-    html: [
+  const module = {
+    rules: [
       {
-        filename: "index.html",
-        template: path.resolve(cwd, "src", "index.html"),
-        favicon,
+        test: /\.(js|jsx|ts|tsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+        },
       },
     ],
   };
+
+  const plugins = [
+    new HtmlWebpackPlugin({
+      filename: "index.html",
+      template: path.resolve(cwd, "src", "index.html"),
+      favicon,
+    }),
+  ];
 
   return {
     mode,
     entry,
     output,
-    builtins,
+    module,
+    plugins,
   };
 }
 
-module.exports = makeRsPackConfig;
+module.exports = makeWebpackConfig;

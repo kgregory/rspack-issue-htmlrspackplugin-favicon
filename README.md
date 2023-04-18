@@ -4,15 +4,19 @@
 
 - Clone the repo
 - Run `npm install`
+- Run `npm build`
 
-### Test absolute paths
+There will be a `dist` folder with two subfolders: `rs` and `webpack`. Those folders will each have an `absolute` and `relative` subfolder.
 
-- Run `npm run build`
-- `dist/index.html` will contain `<link rel="icon" href="/<full filesystem path>" />`
-- Webpack would have been `<link rel="icon" href="/favicon.ico" />`
-
-### Test relative paths
-
-- Run `npm run build:relative`
-- `dist/index.html` will contain `<link rel="icon" href="/static\favicon.ico" />`
-- Webpack would have been `<link rel="icon" href="/favicon.ico" />`
+- `dist/rs/absolute/index.html` shows the output when running `rspack` with an absolute path for the favicon
+  - It will contain `<link rel="icon" href="/full_filesystem_path_to_favicon_property" />`
+  - The favicon will not be in the output folder or any subfolder of it
+- `dist/rs/relative/index.html` shows the output when running `rspack` with a relative path for the favicon
+  - It will contain `<link rel="icon" href="/static\favicon.ico" />`
+  - The `favicon.ico` will be located at subfolder `static/favicon.ico`
+- `dist/webpack/absolute/index.html` shows the output when running `webpack` with an absolute path for the favicon
+  - It will contain `<link rel="icon" href="/favicon.ico">`
+  - The `favicon.ico` will will be in this folder
+- `dist/webpack/relative/index.html` shows the output when running `webpack` with a relative path for the favicon
+  - It will contain `<link rel="icon" href="/favicon.ico">`
+  - The `favicon.ico` will will be in this folder
