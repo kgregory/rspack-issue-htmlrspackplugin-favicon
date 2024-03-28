@@ -1,4 +1,5 @@
 const path = require("node:path");
+const rspack = require("@rspack/core");
 
 /**
  * @param {Record<string, any>} env
@@ -31,21 +32,43 @@ function makeRsPackConfig(env) {
       ? path.join("static", "favicon.ico")
       : path.resolve(cwd, "static", "favicon.ico");
 
-  const builtins = {
-    html: [
-      {
-        filename: "index.html",
-        template: path.resolve(cwd, "src", "index.html"),
-        favicon,
-      },
-    ],
-  };
+  const plugins = [
+    new rspack.HtmlRspackPlugin({
+      filename: "index.html",
+      template: path.resolve(cwd, "src", "index.html"),
+      favicon,
+    }),
+  ];
 
   return {
     mode,
     entry,
     output,
-    builtins,
+    plugins,
+    module: {
+      rules: [
+        {
+          test: /\.tsx?$/,
+          use: {
+            loader: "builtin:swc-loader",
+            options: {
+              sourceMap: true,
+              jsc: {
+                parser: {
+                  syntax: "typescript",
+                  jsx: true,
+                },
+                transform: {
+                  react: {
+                    runtime: "automatic",
+                  },
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
   };
 }
 

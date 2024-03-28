@@ -9,10 +9,10 @@
 There will be a `dist` folder with two subfolders: `rs` and `webpack`. Those folders will each have an `absolute` and `relative` subfolder.
 
 - `dist/rs/absolute/index.html` shows the output when running `rspack` with an absolute path for the favicon
-  - It will contain `<link rel="icon" href="/full_filesystem_path_to_favicon_property" />`
-  - The favicon will not be in the output folder or any subfolder of it
+  - It will contain `<link rel="icon" href="/static/favicon.ico" />`
+  - The `favicon.ico` will be located at subfolder `static/favicon.ico`
 - `dist/rs/relative/index.html` shows the output when running `rspack` with a relative path for the favicon
-  - It will contain `<link rel="icon" href="/static\favicon.ico" />`
+  - It will contain `<link rel="icon" href="/static/favicon.ico" />`
   - The `favicon.ico` will be located at subfolder `static/favicon.ico`
 - `dist/webpack/absolute/index.html` shows the output when running `webpack` with an absolute path for the favicon
   - It will contain `<link rel="icon" href="/favicon.ico">`
